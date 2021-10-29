@@ -1,1 +1,3 @@
 rootProject.name = 'cft-focusstart'
+include 'task1'
+
