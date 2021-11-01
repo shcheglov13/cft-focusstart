@@ -1,6 +1,10 @@
 package ru.cft.focusstart.shcheglov.task1;
 
-public class MultiplicationTable {
+import ru.cft.focusstart.shcheglov.task1.writers.Writer;
+
+import java.io.IOException;
+
+public class MultiplicationTableBuilder {
     public static final String DELIMITER_CHAR_TYPE1 = "|";
     public static final String DELIMITER_CHAR_TYPE2 = "-";
     public static final String DELIMITER_CHAR_TYPE3 = "+";
@@ -8,14 +12,20 @@ public class MultiplicationTable {
     private final int size;
     private final Writer writer;
 
-    MultiplicationTable(int size, Writer writer) {
+    MultiplicationTableBuilder(int size, Writer writer) {
         this.size = size;
         this.writer = writer;
     }
 
-    public void printTable() {
-        int sizeDigitsCount = getSizeDigitsCount();
-        int maxNumberDigitsCount = getMaxNumberDigitsCount();
+    public void printTable() throws IOException {
+        String result = buildTable();
+        writer.write(result);
+        writer.close();
+    }
+
+    private String buildTable() {
+        int sizeDigitsCount = getDigitsCount(size);
+        int maxNumberDigitsCount = getDigitsCount(size * size);
         String delimiterLine = getDelimiter(sizeDigitsCount, maxNumberDigitsCount);
 
         StringBuilder sb = new StringBuilder(getCharactersInTableCount(sizeDigitsCount, maxNumberDigitsCount));
@@ -23,13 +33,10 @@ public class MultiplicationTable {
 
         for (int i = 0; i <= size; i++) {
             for (int j = 1; j <= size; j++) {
-                if (i == 0) {
-                    sb.append(String.format("%" + (maxNumberDigitsCount) + "d" + DELIMITER_CHAR_TYPE1, j));
-                } else {
-                    sb.append(String.format("%" + (maxNumberDigitsCount) + "d" + DELIMITER_CHAR_TYPE1, i * j));
-                }
+                sb.append(String.format("%" + (maxNumberDigitsCount) + "d", i == 0 ? j : i * j)).append(DELIMITER_CHAR_TYPE1);
 
                 if (j == size) {
+                    sb.deleteCharAt(sb.lastIndexOf(DELIMITER_CHAR_TYPE1));
                     sb.append(System.lineSeparator());
                 }
             }
@@ -41,7 +48,7 @@ public class MultiplicationTable {
             }
         }
 
-        writer.print(sb.toString());
+        return sb.toString();
     }
 
     private int getCharactersInTableCount(int sizeDigitsCount, int maxNumberDigitsCount) {
@@ -53,15 +60,11 @@ public class MultiplicationTable {
     }
 
     private int getCharsInRowCount(int sizeDigitsCount, int maxNumberDigitsCount) {
-        return sizeDigitsCount + 1 + (maxNumberDigitsCount + 1) * size;
+        return sizeDigitsCount + (maxNumberDigitsCount + 1) * size;
     }
 
-    private int getMaxNumberDigitsCount() {
-        return (int) Math.ceil(Math.log10(size * size + 0.5));
-    }
-
-    private int getSizeDigitsCount() {
-        return (int) Math.ceil(Math.log10(size + 0.5));
+    private int getDigitsCount(int number) {
+        return (int) Math.ceil(Math.log10(number + 0.5));
     }
 
     private String initFirstCell(int sizeDigitsCount) {
@@ -78,6 +81,7 @@ public class MultiplicationTable {
             sb.append(DELIMITER_CHAR_TYPE2.repeat(maxNumberDigitsCount)).append(DELIMITER_CHAR_TYPE3);
         }
 
+        sb.deleteCharAt(sb.lastIndexOf(DELIMITER_CHAR_TYPE3));
         return sb.toString();
     }
 }

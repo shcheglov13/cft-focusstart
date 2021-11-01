@@ -1,6 +1,8 @@
 package ru.cft.focusstart.shcheglov.task1;
 
-import java.io.PrintWriter;
+import ru.cft.focusstart.shcheglov.task1.writers.ConsoleWriter;
+
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -9,22 +11,20 @@ public class Main {
 
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
-            System.out.println("Введите размер таблицы умножения (от 1 до 32)");
+            System.out.printf("Введите размер таблицы умножения (от %d до %d)%n", MIN_SIZE, MAX_SIZE);
             int size = Integer.parseInt(scanner.nextLine());
 
             if (size < MIN_SIZE || size > MAX_SIZE) {
                 System.err.print("Некорректный размер таблицы умножения");
             } else {
-                MultiplicationTable multiplicationTable = new MultiplicationTable(size, str -> {
-                    PrintWriter writer = new PrintWriter(System.out, true);
-                    writer.print(str);
-                    writer.close();
-                });
-
+                MultiplicationTableBuilder multiplicationTable = new MultiplicationTableBuilder(size, new ConsoleWriter());
                 multiplicationTable.printTable();
             }
         } catch (NumberFormatException e) {
             System.err.print("Введено некорректное значение");
+        } catch (IOException e) {
+            System.err.print("Ошибка ввода/вывода");
+            e.printStackTrace();
         }
     }
 }
