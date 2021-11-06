@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TxtFileReader {
-    public static final int LINES_FOR_READ = 2;
     private static final Logger log = LoggerFactory.getLogger(TxtFileReader.class.getName());
+    public static final int LINES_FOR_READ = 2;
 
     private final BufferedReader reader;
 

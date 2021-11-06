@@ -14,10 +14,10 @@ import ru.cft.focusstart.shcheglov.task2.shapes.Triangle;
 import java.io.IOException;
 import java.util.List;
 
-public record Processor(Writer writer) {
+public record Processor(App app, Writer writer) {
     private static final Logger log = LoggerFactory.getLogger(Processor.class.getName());
 
-    public void process(App app) throws IOException {
+    public void process() throws IOException {
         if (app.getOutputFilePath() != null) {
             log.debug("Запуск приложения с аргументами: вывод в файл - {}, файл вывода - {}, файл ввода - {}",
                     true, app.getOutputFilePath(), app.getInputFile());

@@ -25,7 +25,7 @@ public class FileValidator {
         }
     }
 
-    private static void checkLinesCount(List<String> rawData) {
+    public static void checkLinesCount(List<String> rawData) {
         if (rawData.size() != TxtFileReader.LINES_FOR_READ) {
             throw new NotValidDataInFileException(String.format(
                     "Количество строк должно равняться %d", TxtFileReader.LINES_FOR_READ)
@@ -33,7 +33,7 @@ public class FileValidator {
         }
     }
 
-    private static void checkLinesNotBlank(List<String> rawData) {
+    public static void checkLinesNotBlank(List<String> rawData) {
         for (String line : rawData) {
             if (line.isBlank()) {
                 throw new NotValidDataInFileException("Файл содержит пустые строки");
@@ -41,7 +41,7 @@ public class FileValidator {
         }
     }
 
-    private static void checkShapeType(List<String> rawData) {
+    public static void checkShapeType(List<String> rawData) {
         ShapeType[] types = ShapeType.values();
         String shapeName = rawData.get(0).trim().toUpperCase();
 
@@ -59,7 +59,7 @@ public class FileValidator {
         }
     }
 
-    private static void checkParamsCount(List<String> rawData) {
+    public static void checkParamsCount(List<String> rawData) {
         String[] rawParams = rawData.get(1).split(" ");
         String shapeName = rawData.get(0).trim().toUpperCase();
 

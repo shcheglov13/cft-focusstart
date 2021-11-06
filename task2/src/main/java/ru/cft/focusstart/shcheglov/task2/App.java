@@ -31,9 +31,9 @@ public class App extends ConsoleAttributes implements Callable<Integer> {
         Processor processor;
 
         try {
-            processor = new Processor(getOutputFilePath() != null ?
-                    new FileWriterImpl(getOutputFilePath()) : new ConsoleWriterImpl());
-            processor.process(this);
+            processor = new Processor(this,
+                    getOutputFilePath() != null ? new FileWriterImpl(getOutputFilePath()) : new ConsoleWriterImpl());
+            processor.process();
         } catch (IOException e) {
             log.error("Ошибка ввода/вывода. Причина - {}", e.getMessage());
             log.info("Работа приложения завершена из-за возникшей ошибки");

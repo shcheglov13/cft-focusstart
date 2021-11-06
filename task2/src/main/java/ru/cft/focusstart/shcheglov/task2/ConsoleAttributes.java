@@ -22,4 +22,12 @@ public class ConsoleAttributes {
     public String getOutputFilePath() {
         return outputFilePath;
     }
+
+    public void setInputFile(File inputFile) {
+        this.inputFile = inputFile;
+    }
+
+    public void setOutputFilePath(String path) {
+        this.outputFilePath = path;
+    }
 }
