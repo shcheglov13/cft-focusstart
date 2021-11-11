@@ -2,7 +2,7 @@ package ru.cft.focusstart.shcheglov.task2.writers;
 
 import java.io.PrintWriter;
 
-public class ConsoleWriterImpl implements Writer {
+public class ConsoleWriter implements SomeWriter {
     private final PrintWriter writer = new PrintWriter(System.out);
 
     @Override
@@ -13,6 +13,5 @@ public class ConsoleWriterImpl implements Writer {
 
     @Override
     public void close() {
-        writer.close();
     }
 }

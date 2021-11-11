@@ -1,22 +1,16 @@
 package ru.cft.focusstart.shcheglov.task2.shapes;
 
+import static ru.cft.focusstart.shcheglov.task2.utils.Constants.*;
+
 public abstract class Shape {
-    public static int ROUND_OFF = 2;
-    public static String UNIT = "мм";
-    public static String UNIT_FOR_AREA = "кв.мм";
-    public static String DEGREE = "°";
-    public static String CIRCLE_NAME = "CIRCLE";
-    public static String RECTANGLE_NAME = "RECTANGLE";
-    public static String TRIANGLE_NAME = "TRIANGLE";
+    private final ShapeType type;
 
-    private final String name;
-
-    public Shape(String name) {
-        this.name = name;
+    public Shape(ShapeType type) {
+        this.type = type;
     }
 
-    public String getName() {
-        return name;
+    public ShapeType getType() {
+        return type;
     }
 
     public abstract double getPerimeter();
@@ -24,4 +18,16 @@ public abstract class Shape {
     public abstract double getArea();
 
     public abstract String getInfo();
+
+    public String generateShapeNameInfoString() {
+        return String.format("Тип фигуры: %s%n", type);
+    }
+
+    public String generateAreaInfoString(double value) {
+        return String.format("Площадь: %." + ROUND_OFF + "f " + UNIT_FOR_AREA + "%n", value);
+    }
+
+    public String generatePerimeterInfoString(double value) {
+        return String.format("Периметр: %." + ROUND_OFF + "f " + UNIT + "%n", value);
+    }
 }

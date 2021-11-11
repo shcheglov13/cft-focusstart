@@ -7,9 +7,10 @@ import org.junit.jupiter.api.io.TempDir;
 import ru.cft.focusstart.shcheglov.task2.App;
 import ru.cft.focusstart.shcheglov.task2.processor.Processor;
 import ru.cft.focusstart.shcheglov.task2.shapes.Circle;
-import ru.cft.focusstart.shcheglov.task2.writers.ConsoleWriterImpl;
-import ru.cft.focusstart.shcheglov.task2.writers.FileWriterImpl;
+import ru.cft.focusstart.shcheglov.task2.writers.ConsoleWriter;
+import ru.cft.focusstart.shcheglov.task2.writers.FileWriter;
 
+import javax.naming.OperationNotSupportedException;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -43,11 +44,11 @@ public class ProcessorTest {
     }
 
     @Test
-    public void consoleOutputTest() throws IOException {
+    public void consoleOutputTest() throws IOException, OperationNotSupportedException {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         System.setOut(new PrintStream(output));
 
-        Processor processor = new Processor(app, new ConsoleWriterImpl());
+        Processor processor = new Processor(app, new ConsoleWriter());
         processor.process();
 
         Circle circle = new Circle(13);
@@ -56,8 +57,8 @@ public class ProcessorTest {
     }
 
     @Test
-    public void fileOutputTest() throws IOException {
-        Processor processor = new Processor(app, new FileWriterImpl(app.getOutputFilePath()));
+    public void fileOutputTest() throws IOException, OperationNotSupportedException {
+        Processor processor = new Processor(app, new FileWriter(app.getOutputFilePath()));
         processor.process();
 
         String dataFromOutputFile = new String(Files.readAllBytes(Paths.get(app.getOutputFilePath())));

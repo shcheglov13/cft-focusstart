@@ -3,20 +3,22 @@ package ru.cft.focusstart.shcheglov.task2.shapes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static ru.cft.focusstart.shcheglov.task2.utils.Constants.*;
+
 public class Circle extends Shape {
     private static final Logger log = LoggerFactory.getLogger(Circle.class.getName());
     private final double radius;
 
     public Circle(double radius) {
-        super(CIRCLE_NAME);
+        super(ShapeType.CIRCLE);
 
-        if (radius < 0) {
+        if (radius <= 0) {
             throw new IllegalArgumentException(String.format("Недопустимые параметры для %s. " +
-                    "Радиус имеет отрицательное значение: radius - %s", CIRCLE_NAME, radius));
+                    "Радиус имеет значение <= 0: radius - %s", getType(), radius));
         }
 
         this.radius = radius;
-        log.debug("{} успешно создан: radius {}", CIRCLE_NAME, radius);
+        log.debug("{} успешно создан: radius {}", getType(), radius);
     }
 
     public double getRadius() {
@@ -24,7 +26,7 @@ public class Circle extends Shape {
     }
 
     public double getDiameter() {
-        return radius * radius;
+        return radius * 2;
     }
 
     @Override
@@ -39,12 +41,12 @@ public class Circle extends Shape {
 
     @Override
     public String getInfo() {
-        return String.format("Тип фигуры: %s%n" +
-                        "Площадь: %." + ROUND_OFF + "f " + UNIT_FOR_AREA + "%n" +
-                        "Периметр: %." + ROUND_OFF + "f " + UNIT + "%n" +
+        return String.format(generateShapeNameInfoString() +
+                        generateAreaInfoString(getArea()) +
+                        generatePerimeterInfoString(getPerimeter()) +
                         "Диаметр: %." + ROUND_OFF + "f " + UNIT + "%n" +
                         "Радиус: %." + ROUND_OFF + "f " + UNIT + "%n",
-                getName(), getArea(), getPerimeter(), getDiameter(), radius
+                getDiameter(), radius
         );
     }
 }

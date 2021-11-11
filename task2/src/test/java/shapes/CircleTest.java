@@ -6,13 +6,14 @@ import org.junit.jupiter.api.Test;
 import ru.cft.focusstart.shcheglov.task2.shapes.Circle;
 
 public class CircleTest {
+    private static final double NUMERIC_RANGE_START = 0.1;
     private static final double EPSILON = 0.0001;
     private static Circle circle;
     private static double randomDouble;
 
     @BeforeAll
     public static void init() {
-        randomDouble = Math.random() * Math.pow(2, 10);
+        randomDouble = Math.random() * Math.pow(2, 10) + NUMERIC_RANGE_START;
         circle = new Circle(randomDouble);
     }
 
@@ -31,5 +32,11 @@ public class CircleTest {
     public void areaCalculationTest() {
         double expected = Math.PI * randomDouble * randomDouble;
         Assertions.assertEquals(expected, circle.getArea(), EPSILON);
+    }
+
+    @Test
+    public void diameterCalculationTest() {
+        double expected = randomDouble * 2;
+        Assertions.assertEquals(expected, circle.getDiameter(), EPSILON);
     }
 }

@@ -9,6 +9,7 @@ import ru.cft.focusstart.shcheglov.task2.shapes.Triangle;
 import java.util.Arrays;
 
 public class TriangleTest {
+    private static final double NUMERIC_RANGE_START = 0.1;
     private static final double EPSILON = 0.0001;
     private static Triangle triangle;
     private static double sideX;
@@ -19,7 +20,7 @@ public class TriangleTest {
         double[] randomDoubles = new double[ShapeType.TRIANGLE.getParamsCount()];
 
         for (int i = 0; i < randomDoubles.length - 1; i++) {
-            randomDoubles[i] = Math.random() * Math.pow(2, 10);
+            randomDoubles[i] = Math.random() * Math.pow(2, 10) + NUMERIC_RANGE_START;
         }
 
         Arrays.sort(randomDoubles);

@@ -5,26 +5,30 @@ import org.slf4j.LoggerFactory;
 import ru.cft.focusstart.shcheglov.task2.App;
 import ru.cft.focusstart.shcheglov.task2.reader.TxtFileReader;
 import ru.cft.focusstart.shcheglov.task2.shapes.ShapeType;
-import ru.cft.focusstart.shcheglov.task2.writers.Writer;
+import ru.cft.focusstart.shcheglov.task2.writers.SomeWriter;
 import ru.cft.focusstart.shcheglov.task2.shapes.Circle;
 import ru.cft.focusstart.shcheglov.task2.shapes.Rectangle;
 import ru.cft.focusstart.shcheglov.task2.shapes.Shape;
 import ru.cft.focusstart.shcheglov.task2.shapes.Triangle;
 
+import javax.naming.OperationNotSupportedException;
 import java.io.IOException;
 import java.util.List;
 
-public record Processor(App app, Writer writer) {
+public class Processor {
+    private final App app;
+    private final SomeWriter writer;
+
+    public Processor(App app, SomeWriter writer) {
+        this.app = app;
+        this.writer = writer;
+    }
+
     private static final Logger log = LoggerFactory.getLogger(Processor.class.getName());
 
-    public void process() throws IOException {
-        if (app.getOutputFilePath() != null) {
-            log.debug("Запуск приложения с аргументами: вывод в файл - {}, файл вывода - {}, файл ввода - {}",
-                    true, app.getOutputFilePath(), app.getInputFile());
-        } else {
-            log.debug("Запуск приложения с аргументами: вывод в файл - {}, файл ввода - {}",
-                    false, app.getInputFile());
-        }
+    public void process() throws IOException, OperationNotSupportedException {
+        log.debug("Запуск приложения с аргументами: вывод в файл {}, файл вывода - {}, файл ввода - {}",
+                app.getOutputFilePath() != null, app.getOutputFilePath(), app.getInputFile());
 
         TxtFileReader parser = new TxtFileReader(app.getInputFile());
         List<String> rawData = parser.getRawData();
@@ -34,15 +38,17 @@ public record Processor(App app, Writer writer) {
 
         try {
             Shape shape = getShape(shapeType, shapeDimensions);
-            write(shape.getInfo());
+            writer.write(shape.getInfo());
         } catch (IllegalArgumentException e) {
             log.error("Ошибка создания фигуры. Причина - {}", e.getMessage());
-            log.info("Работа приложения завершена из-за возникшей ошибки");
-            System.exit(1);
+            throw e;
         }
+
+        log.info("Информация о фигуре успешно записана. Место назначения: {}", app.getOutputFilePath() == null ?
+                "консоль" : app.getOutputFilePath());
     }
 
-    private Shape getShape(ShapeType shapeType, double[] dimensions) {
+    public Shape getShape(ShapeType shapeType, double[] dimensions) {
         return switch (shapeType) {
             case CIRCLE -> new Circle(dimensions[0]);
             case RECTANGLE -> new Rectangle(dimensions[0], dimensions[1]);
@@ -50,12 +56,12 @@ public record Processor(App app, Writer writer) {
         };
     }
 
-    private ShapeType getShapeTypeFromRawData(List<String> rawData) {
+    public ShapeType getShapeTypeFromRawData(List<String> rawData) {
         String shapeName = rawData.get(0).trim().toUpperCase();
         return ShapeType.valueOf(shapeName);
     }
 
-    private double[] getShapeDimensionsFromRawData(List<String> rawData) {
+    public double[] getShapeDimensionsFromRawData(List<String> rawData) {
         String[] rawDimensions = rawData.get(1).split(" ");
         double[] dimensions = new double[rawDimensions.length];
 
@@ -65,16 +71,9 @@ public record Processor(App app, Writer writer) {
             }
         } catch (NumberFormatException e) {
             log.error("Ошибка конвертации String в double. Причина - {}", e.getMessage());
-            log.info("Работа приложения завершена из-за возникшей ошибки");
-            System.exit(1);
+            throw e;
         }
 
         return dimensions;
-    }
-
-    private void write(String info) throws IOException {
-        writer.write(info);
-        log.info("информация о фигуре успешно записана");
-        writer.close();
     }
 }

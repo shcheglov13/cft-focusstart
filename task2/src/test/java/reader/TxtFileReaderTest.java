@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import ru.cft.focusstart.shcheglov.task2.reader.TxtFileReader;
 
+import javax.naming.OperationNotSupportedException;
 import java.io.*;
 import java.nio.file.Path;
 import java.util.List;
@@ -32,7 +33,7 @@ public class TxtFileReaderTest {
     }
 
     @Test
-    public void readFileTest() throws IOException {
+    public void readFileTest() throws IOException, OperationNotSupportedException {
         TxtFileReader reader = new TxtFileReader(tempFile);
         Assertions.assertEquals(expected, reader.getRawData());
     }

@@ -3,10 +3,10 @@ package ru.cft.focusstart.shcheglov.task2.writers;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-public class FileWriterImpl implements Writer {
+public class FileWriter implements SomeWriter {
     private final PrintWriter writer;
 
-    public FileWriterImpl(String path) throws FileNotFoundException {
+    public FileWriter(String path) throws FileNotFoundException {
         writer = new PrintWriter(path);
     }
 
