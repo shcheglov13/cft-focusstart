@@ -1,13 +1,15 @@
 package ru.cft.focusstart.shcheglov.task2.writers;
 
-import java.io.FileNotFoundException;
+import ru.cft.focusstart.shcheglov.task2.utils.Constants;
+
+import java.io.IOException;
 import java.io.PrintWriter;
 
 public class FileWriter implements SomeWriter {
     private final PrintWriter writer;
 
-    public FileWriter(String path) throws FileNotFoundException {
-        writer = new PrintWriter(path);
+    public FileWriter(String path) throws IOException {
+        writer = new PrintWriter(path, Constants.CHARSET);
     }
 
     @Override

@@ -11,7 +11,6 @@ import ru.cft.focusstart.shcheglov.task2.shapes.Rectangle;
 import ru.cft.focusstart.shcheglov.task2.shapes.Shape;
 import ru.cft.focusstart.shcheglov.task2.shapes.Triangle;
 
-import javax.naming.OperationNotSupportedException;
 import java.io.IOException;
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class Processor {
 
     private static final Logger log = LoggerFactory.getLogger(Processor.class.getName());
 
-    public void process() throws IOException, OperationNotSupportedException {
+    public void process() throws IOException {
         log.debug("Запуск приложения с аргументами: вывод в файл {}, файл вывода - {}, файл ввода - {}",
                 app.getOutputFilePath() != null, app.getOutputFilePath(), app.getInputFile());
 
@@ -44,7 +43,7 @@ public class Processor {
             throw e;
         }
 
-        log.info("Информация о фигуре успешно записана. Место назначения: {}", app.getOutputFilePath() == null ?
+        log.info("информация о фигуре успешно записана. Место назначения: {}", app.getOutputFilePath() == null ?
                 "консоль" : app.getOutputFilePath());
     }
 

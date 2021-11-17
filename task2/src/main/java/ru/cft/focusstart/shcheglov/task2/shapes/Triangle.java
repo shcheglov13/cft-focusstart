@@ -56,22 +56,24 @@ public class Triangle extends Shape {
     }
 
     public double getSideXAngle() {
-        return Math.toDegrees(Math.acos(((sideY * sideY) + (sideZ * sideZ) - (sideX * sideX)) / (sideZ * sideY * 2)));
+        return calculateAngle(sideZ, sideY, sideX);
     }
 
     public double getSideYAngle() {
-        return Math.toDegrees(Math.acos(((sideX * sideX) + (sideY * sideY) - (sideZ * sideZ)) / (sideX * sideY * 2)));
+        return calculateAngle(sideX, sideY, sideZ);
     }
 
     public double getSideZAngle() {
-        return Math.toDegrees(Math.acos(((sideX * sideX) + (sideZ * sideZ) - (sideY * sideY)) / (sideX * sideZ * 2)));
+        return calculateAngle(sideX, sideZ, sideY);
+    }
+
+    private double calculateAngle(double sideA, double sideB, double sideC) {
+        return Math.toDegrees(Math.acos(((sideA * sideA) + (sideB * sideB) - (sideC * sideC)) / (sideA * sideB * 2)));
     }
 
     @Override
     public String getInfo() {
-        return String.format(generateShapeNameInfoString() +
-                        generateAreaInfoString(getArea()) +
-                        generatePerimeterInfoString(getPerimeter()) +
+        return String.format(super.getInfo() +
                         "Сторона X: %." + ROUND_OFF + "f " + UNIT + "%n" +
                         "Противолежащий угол X: %." + ROUND_OFF + "f" + DEGREE + "%n" +
                         "Сторона Y: %." + ROUND_OFF + "f " + UNIT + "%n" +

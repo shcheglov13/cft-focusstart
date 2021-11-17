@@ -41,9 +41,7 @@ public class Circle extends Shape {
 
     @Override
     public String getInfo() {
-        return String.format(generateShapeNameInfoString() +
-                        generateAreaInfoString(getArea()) +
-                        generatePerimeterInfoString(getPerimeter()) +
+        return String.format(super.getInfo() +
                         "Диаметр: %." + ROUND_OFF + "f " + UNIT + "%n" +
                         "Радиус: %." + ROUND_OFF + "f " + UNIT + "%n",
                 getDiameter(), radius

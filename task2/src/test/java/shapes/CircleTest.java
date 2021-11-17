@@ -1,42 +1,33 @@
 package shapes;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.cft.focusstart.shcheglov.task2.shapes.Circle;
 
 public class CircleTest {
-    private static final double NUMERIC_RANGE_START = 0.1;
     private static final double EPSILON = 0.0001;
-    private static Circle circle;
-    private static double randomDouble;
-
-    @BeforeAll
-    public static void init() {
-        randomDouble = Math.random() * Math.pow(2, 10) + NUMERIC_RANGE_START;
-        circle = new Circle(randomDouble);
-    }
+    private static final double RADIUS = 2;
 
     @Test
     public void negativeParamTest() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Circle(randomDouble * -1));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Circle(-RADIUS));
     }
 
     @Test
     public void perimeterCalculationTest() {
-        double expected = Math.PI * randomDouble * 2;
-        Assertions.assertEquals(expected, circle.getPerimeter(), EPSILON);
+        double expected = Math.PI * 4;
+        Assertions.assertEquals(expected, new Circle(RADIUS).getPerimeter(), EPSILON);
     }
 
     @Test
     public void areaCalculationTest() {
-        double expected = Math.PI * randomDouble * randomDouble;
-        Assertions.assertEquals(expected, circle.getArea(), EPSILON);
+        double expected = Math.PI * 4;
+        Assertions.assertEquals(expected, new Circle(RADIUS).getArea(), EPSILON);
     }
 
     @Test
     public void diameterCalculationTest() {
-        double expected = randomDouble * 2;
-        Assertions.assertEquals(expected, circle.getDiameter(), EPSILON);
+        double expected = 4;
+        Assertions.assertEquals(expected, new Circle(RADIUS).getDiameter(), EPSILON);
     }
 }

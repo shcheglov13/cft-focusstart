@@ -11,7 +11,6 @@ import ru.cft.focusstart.shcheglov.task2.writers.ConsoleWriter;
 import ru.cft.focusstart.shcheglov.task2.writers.SomeWriter;
 import ru.cft.focusstart.shcheglov.task2.writers.FileWriter;
 
-import javax.naming.OperationNotSupportedException;
 import java.io.IOException;
 
 @Command(description = "Консольное приложение с объектно-ориентированной архитектурой, выводящее характеристики " +
@@ -25,7 +24,6 @@ public class App extends ConsoleAttributes implements Runnable {
         new CommandLine(new App()).execute(args);
     }
 
-    @Override
     public void run() {
         try (SomeWriter writer = getOutputFilePath() != null ?
                 new FileWriter(getOutputFilePath()) : new ConsoleWriter()) {
@@ -34,8 +32,7 @@ public class App extends ConsoleAttributes implements Runnable {
         } catch (IOException e) {
             log.error("Ошибка ввода/вывода. Причина - {}", e.getMessage());
             log.info("Работа приложения завершена из-за возникшей ошибки");
-        } catch (NotValidDataInFileException | ShapeNotSupportedException | OperationNotSupportedException
-                | IllegalArgumentException e) {
+        } catch (NotValidDataInFileException | ShapeNotSupportedException | IllegalArgumentException e) {
             log.info("Работа приложения завершена из-за возникшей ошибки");
         }
     }

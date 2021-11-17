@@ -49,9 +49,7 @@ public class Rectangle extends Shape {
 
     @Override
     public String getInfo() {
-        return String.format(generateShapeNameInfoString() +
-                        generateAreaInfoString(getArea()) +
-                        generatePerimeterInfoString(getPerimeter()) +
+        return String.format(super.getInfo() +
                         "Длина диагонали: %." + ROUND_OFF + "f " + UNIT + "%n" +
                         "Ширина: %." + ROUND_OFF + "f " + UNIT + "%n" +
                         "Длина: %." + ROUND_OFF + "f " + UNIT + "%n",
