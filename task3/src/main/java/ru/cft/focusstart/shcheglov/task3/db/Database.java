@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.h2.jdbcx.JdbcDataSource;
 import ru.cft.focusstart.shcheglov.task3.utils.Constants;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -64,7 +65,12 @@ public class Database {
         log.info("Подключение к базе данных");
 
         Properties properties = new Properties();
-        properties.load(new FileReader(Constants.PROPERTY_FILE, StandardCharsets.UTF_8));
+
+        if (Constants.PROPERTY_FILE_URL != null) {
+            properties.load(new FileReader(Constants.PROPERTY_FILE_URL.getFile(), StandardCharsets.UTF_8));
+        } else {
+            throw new FileNotFoundException("Файл с конфигурацией базы данных не найден");
+        }
 
         JdbcDataSource dataSource = new JdbcDataSource();
         dataSource.setURL(properties.getProperty("datasource.url"));

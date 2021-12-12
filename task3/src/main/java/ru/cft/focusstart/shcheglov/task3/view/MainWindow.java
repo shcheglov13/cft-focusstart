@@ -89,6 +89,7 @@ public class MainWindow extends JFrame implements ModelListener, TimerListener {
         setIconImage(GameImage.APP_ICON.getImageIcon().getImage());
         setResizable(false);
         setVisible(true);
+        setLocationRelativeTo(null);
         controller.subscribeToModel(this);
         controller.subscribeToTimer(this);
 
@@ -127,7 +128,6 @@ public class MainWindow extends JFrame implements ModelListener, TimerListener {
         setBombsCount(difficult.getBombsCount());
         addBombCounterImage();
         pack();
-        setLocationRelativeTo(null);
     }
 
     private JPanel createButtonsPanel(int rows, int cols) {

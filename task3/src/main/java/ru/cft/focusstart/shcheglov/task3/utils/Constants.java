@@ -1,14 +1,13 @@
 package ru.cft.focusstart.shcheglov.task3.utils;
 
+import lombok.experimental.UtilityClass;
 import ru.cft.focusstart.shcheglov.task3.enums.GameDifficult;
 
-import java.io.File;
+import java.net.URL;
 
+@UtilityClass
 public final class Constants {
-    private Constants() {
-    }
-
-    public static final File PROPERTY_FILE = new File("./task3/src/main/resources/application.properties");
+    public static final URL PROPERTY_FILE_URL = Constants.class.getClassLoader().getResource("application.properties");
     public static final GameDifficult DEFAULT_DIFFICULT = GameDifficult.NOVICE;
     public static final String DEFAULT_TIMER_VALUE = "00:00:00";
     public static final String APP_TITLE = "Miner";
